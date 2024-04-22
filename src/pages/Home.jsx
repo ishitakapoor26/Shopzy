@@ -63,7 +63,7 @@ const Home = () => {
           </h1>
           <span className="absolute left-1/2 transform -translate-x-1/2 top-10 bottom-0 w-1/4 h-0.5 bg-red-500"></span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-12 max-w-screen-xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-12 max-w-screen-xl mx-auto m-3">
           {categories.map((category, index) => (
             <Link
               key={index}
