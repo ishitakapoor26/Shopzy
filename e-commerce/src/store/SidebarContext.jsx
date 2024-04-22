@@ -1,9 +1,18 @@
-import React, { useState, createContext, Children } from "react";
+import React, { useState, createContext, useEffect } from "react";
 
 export const SidebarContext = createContext();
 
 export const SidebarProvider = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  // Retrieve the initial state from local storage or set it to false if not found
+  const [isOpen, setIsOpen] = useState(
+    JSON.parse(localStorage.getItem("sidebarIsOpen")) || false
+  );
+
+  // Update local storage whenever the isOpen state changes
+  useEffect(() => {
+    localStorage.setItem("sidebarIsOpen", JSON.stringify(isOpen));
+  }, [isOpen]);
+
   const handleClose = () => {
     setIsOpen(false);
   };

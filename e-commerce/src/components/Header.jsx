@@ -33,38 +33,13 @@ const Header = () => {
           <Link to={"/"} className="hover:text-gray-800 text-primary">
             Home
           </Link>
-          <div className="relative">
-            <button
-              onMouseEnter={() => setIsCategoryOpen(true)}
-              onMouseLeave={() => setIsCategoryOpen(false)}
-              className="hover:text-gray-800"
-            >
-              Categories
-            </button>
-            {isCategoryOpen && (
-              <div className="absolute top-full left-0 w-full bg-white shadow-lg rounded-md mt-2">
-                <ul className="py-2">
-                  {/* Add your categories here */}
-                  <li>
-                    <Link
-                      to={"/category1"}
-                      className="block px-4 py-2 hover:bg-gray-100 text-primary"
-                    >
-                      Category 1
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to={"/category2"}
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
-                      Category 2
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
+          <a
+            href="#category-list"
+            className="hover:text-gray-800 text-primary translate-x-2"
+          >
+            Categories
+          </a>
+
           <Link to={"/contact"} className="hover:text-gray-800">
             Contact Us
           </Link>

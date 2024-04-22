@@ -3,22 +3,24 @@ import React, { createContext, useState, useEffect } from "react";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  // Retrieve cart data from local storage or initialize an empty array
+  const initialCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const [cart, setCart] = useState(initialCart);
 
   const [itemAmount, setItemAmount] = useState(0);
-
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const total = cart.reduce((accumulator, currentItem) => {
+    // Calculate total price
+    const newTotal = cart.reduce((accumulator, currentItem) => {
       return accumulator + currentItem.price * currentItem.amount;
     }, 0);
-    setTotal(total);
-  });
-
-  // update item amount
+    setTotal(newTotal);
+  }, [cart]);
 
   useEffect(() => {
+    // Calculate total item amount
     if (cart) {
       const amount = cart.reduce((accumulator, currentItem) => {
         return accumulator + currentItem.amount;
@@ -27,16 +29,19 @@ export const CartProvider = ({ children }) => {
     }
   }, [cart]);
 
+  useEffect(() => {
+    // Store cart data in local storage whenever it changes
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   const addToCart = (product, id) => {
     const newItem = { ...product, amount: 1 };
 
-    const cartItem = cart.find((item) => {
-      return item.id === id;
-    });
+    const cartItem = cart.find((item) => item.id === id);
     if (cartItem) {
-      const newCart = [...cart].map((item) => {
+      const newCart = cart.map((item) => {
         if (item.id === id) {
-          return { ...item, amount: cartItem.amount + 1 };
+          return { ...item, amount: item.amount + 1 };
         } else {
           return item;
         }
@@ -48,9 +53,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (id) => {
-    const newCart = cart.filter((item) => {
-      return item.id !== id;
-    });
+    const newCart = cart.filter((item) => item.id !== id);
     setCart(newCart);
   };
 
@@ -59,28 +62,25 @@ export const CartProvider = ({ children }) => {
   };
 
   const increaseAmount = (id) => {
-    const item = cart.find((item) => item.id === id);
-    addToCart(item, id);
+    const newCart = cart.map((item) => {
+      if (item.id === id) {
+        return { ...item, amount: item.amount + 1 };
+      } else {
+        return item;
+      }
+    });
+    setCart(newCart);
   };
 
   const decreaseAmount = (id) => {
-    const cartItem = cart.find((item) => {
-      return item.id === id;
+    const newCart = cart.map((item) => {
+      if (item.id === id && item.amount > 1) {
+        return { ...item, amount: item.amount - 1 };
+      } else {
+        return item;
+      }
     });
-
-    if (cartItem) {
-      const newCart = cart.map((item) => {
-        if (item.id === id) {
-          return { ...item, amount: cartItem.amount - 1 };
-        } else {
-          return item;
-        }
-      });
-      setCart(newCart);
-    }
-    if (cartItem.amount === 1) {
-      removeFromCart(id);
-    }
+    setCart(newCart.filter((item) => item.amount > 0));
   };
 
   return (

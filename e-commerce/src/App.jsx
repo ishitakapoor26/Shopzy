@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
 import ViewCart from "./pages/ViewCart";
+import CategoryPage from "./pages/CategoryPage";
+import CheckoutPage from "./pages/CheckoutPage";
 
 // import components
 
@@ -23,6 +25,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<ViewCart />} />
+            <Route path="/products/:category" element={<CategoryPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
           </Routes>
           <Sidebar />
           <Footer />

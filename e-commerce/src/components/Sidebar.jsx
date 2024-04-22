@@ -5,6 +5,7 @@ import { FiTrash2 } from "react-icons/fi";
 import CartItem from "../components/CartItem";
 import { SidebarContext } from "../store/SidebarContext";
 import { CartContext } from "../store/CartContext";
+import emptyCart from "../img/empty_cart.png";
 
 const Sidebar = () => {
   const { isOpen, handleClose } = useContext(SidebarContext);
@@ -29,37 +30,48 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="flex flex-col flex-1 overflow-y-auto border-b">
-        {cart.map((item) => (
-          <CartItem item={item} key={item.id} />
-        ))}
-      </div>
-      <div className="flex flex-col justify-between py-4 px-6">
-        <div>
-          <div className="uppercase font-semibold">
-            <span>Total:</span>$ {parseFloat(total).toFixed(2)}
+        {cart.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <img
+              src={emptyCart}
+              alt="Empty Cart"
+              className="mx-auto mb-4"
+              style={{ height: "20rem", width: "22rem" }}
+            />
           </div>
-          <div
-            onClick={clearCart}
-            className="cursor-pointer bg-red-500 text-white rounded-full p-2 mb-3 mt-4 flex justify-center items-center"
-          >
-            <FiTrash2 className="text-xl" />
+        ) : (
+          cart.map((item) => <CartItem item={item} key={item.id} />)
+        )}
+      </div>
+      {cart.length !== 0 && (
+        <div className="flex flex-col justify-between py-4 px-6">
+          <div>
+            <div className="uppercase font-semibold">
+              <span>Total:</span>$ {parseFloat(total).toFixed(2)}
+            </div>
+            <div
+              onClick={clearCart}
+              className="cursor-pointer bg-red-500 text-white rounded-full p-2 mb-3 mt-4 flex justify-center items-center"
+            >
+              <FiTrash2 className="text-xl" />
+            </div>
+          </div>
+          <div className="flex flex-col gap-3">
+            <Link
+              to={"/cart"}
+              className="bg-gray-200 text-primary font-medium rounded-full py-2 text-center"
+            >
+              View Cart
+            </Link>
+            <Link
+              to={"/checkout"}
+              className="bg-primary text-white font-medium rounded-full py-2 text-center"
+            >
+              Checkout
+            </Link>
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <Link
-            to={"/cart"}
-            className="bg-gray-200 text-primary font-medium rounded-full py-2 text-center"
-          >
-            View Cart
-          </Link>
-          <Link
-            to={"/checkout"}
-            className="bg-primary text-white font-medium rounded-full py-2 text-center"
-          >
-            Checkout
-          </Link>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

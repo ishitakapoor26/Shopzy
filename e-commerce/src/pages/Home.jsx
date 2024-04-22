@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import Product from "../components/Product";
 import { ProductContext } from "../store/ProductContext";
 import Hero from "../components/Hero";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState("default");
   const [filterByRating, setFilterByRating] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading state
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -22,7 +25,9 @@ const Home = () => {
       }
     };
 
-    fetchCategories();
+    fetchCategories()
+      .then(() => setLoading(false)) // Set loading to false when fetching is done
+      .catch(() => setLoading(false)); // Set loading to false in case of error
   }, []);
 
   const products = useContext(ProductContext);
@@ -44,14 +49,14 @@ const Home = () => {
     setFilteredProducts(sortedProducts);
   }, [products, sortBy, filterByRating]);
 
-  if (products.length === 0 || categories.length === 0) {
-    return <div>Loading...</div>; // or any other loading indicator
+  if (loading || products.length === 0 || categories.length === 0) {
+    return <Loader />; // Display loader while data is being fetched or loading
   }
 
   return (
     <div>
       <Hero />
-      <section className="py-16">
+      <section className="py-16" id="category-list">
         <div className="container mx-auto relative">
           <h1 className="text-3xl font-semibold text-center mb-10 text-gray-800 text-primary">
             Explore Product Categories
@@ -60,12 +65,13 @@ const Home = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-12 max-w-screen-xl mx-auto">
           {categories.map((category, index) => (
-            <div
+            <Link
               key={index}
+              to={`/products/${category}`}
               className="bg-gray-100 text-red-500 rounded-lg p-4 text-center uppercase font-medium cursor-pointer"
             >
               {category}
-            </div>
+            </Link>
           ))}
         </div>
       </section>
