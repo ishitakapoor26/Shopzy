@@ -35,6 +35,12 @@ const Header = () => {
           >
             Categories
           </a>
+          <div>
+            <Link to={"/login"}>Login</Link>
+          </div>
+          <div>
+            <Link to={"/signup"}>Signup</Link>
+          </div>
         </nav>
         <div
           className="cursor-pointer flex relative"

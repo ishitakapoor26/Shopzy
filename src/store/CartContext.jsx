@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-
+import Modal from "../components/Modal";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -10,6 +10,7 @@ export const CartProvider = ({ children }) => {
 
   const [itemAmount, setItemAmount] = useState(0);
   const [total, setTotal] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Calculate total price
@@ -35,6 +36,9 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   const addToCart = (product, id) => {
+    if (!isLoggedIn) {
+      return <Modal />;
+    }
     const newItem = { ...product, amount: 1 };
 
     const cartItem = cart.find((item) => item.id === id);

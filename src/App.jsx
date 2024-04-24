@@ -14,6 +14,8 @@ import CheckoutPage from "./pages/CheckoutPage";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
+import { Signup } from "./components/Signup";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<ViewCart />} />
             <Route path="/products/:category" element={<CategoryPage />} />
