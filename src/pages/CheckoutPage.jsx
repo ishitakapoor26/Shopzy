@@ -54,9 +54,16 @@ const Checkout = () => {
       return;
     }
 
-    // Submit checkout form data
+    // Save checkout data in local storage
+    const checkoutData = {
+      address: selectedAddress,
+      paymentOption,
+    };
+    localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+
+    // Proceed with checkout (submitCheckoutForm function call)
     // Example:
-    // submitCheckoutForm({ address: selectedAddress, paymentOption });
+    // submitCheckoutForm(checkoutData);
   };
 
   return (

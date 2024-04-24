@@ -56,7 +56,7 @@ const Home = () => {
   return (
     <div>
       <Hero />
-      <section className="py-16" id="category-list">
+      {/* <section className="py-16" id="category-list">
         <div className="container mx-auto relative">
           <h1 className="text-3xl font-semibold text-center mb-10 text-gray-800 text-primary">
             Explore Product Categories
@@ -74,7 +74,7 @@ const Home = () => {
             </Link>
           ))}
         </div>
-      </section>
+      </section> */}
       <section className="py-7">
         <div className="container mx-auto relative">
           <h1 className="text-3xl font-semibold text-center mb-10 text-gray-800 text-primary">

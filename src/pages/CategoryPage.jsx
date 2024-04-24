@@ -11,12 +11,32 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          `https://dummyjson.com/products/category/${category}`
-        );
-        const data = await response.json();
-        setProducts(data.products);
-        setLoading(false); // Set loading to false after fetching data
+        // Check if products exist in local storage
+        const storedProducts =
+          JSON.parse(localStorage.getItem("categoryProducts")) || {};
+
+        // If products for the category exist in local storage, set them
+        if (storedProducts[category]) {
+          setProducts(storedProducts[category]);
+          setLoading(false);
+        } else {
+          // Fetch products if not found in local storage
+          const response = await fetch(
+            `https://dummyjson.com/products/category/${category}`
+          );
+          const data = await response.json();
+          setProducts(data.products);
+          setLoading(false);
+
+          // Store fetched products in local storage
+          localStorage.setItem(
+            "categoryProducts",
+            JSON.stringify({
+              ...storedProducts,
+              [category]: data.products,
+            })
+          );
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
         setLoading(false); // Set loading to false in case of error

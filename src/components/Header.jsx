@@ -18,31 +18,23 @@ const Header = () => {
   }, []);
 
   return (
-    <header
-      className={`${
-        isActive ? "bg-white py-4 shadow-md" : "bg-transparent py-6"
-      } fixed w-full z-10 transition-all`}
-    >
+    <header className="py-6 bg-black text-white fixed w-full z-10 transition-all">
       <div className="container flex mx-auto items-center justify-between h-full">
-        <Link to={"/"}>
+        {/* <Link to={"/"}>
           <div>
             <img className="w-12" src={logo} alt="Logo" />
           </div>
-        </Link>
-        <nav className="flex items-center space-x-20">
-          <Link to={"/"} className="hover:text-gray-800 text-primary">
+        </Link> */}
+        <nav className="flex items-cente space-x-20">
+          <Link to={"/"} className="hover:text-red-500 text-white">
             Home
           </Link>
           <a
             href="#category-list"
-            className="hover:text-gray-800 text-primary translate-x-2"
+            className="hover:text-red-500 text-white translate-x-2"
           >
             Categories
           </a>
-
-          <Link to={"/contact"} className="hover:text-gray-800">
-            Contact Us
-          </Link>
         </nav>
         <div
           className="cursor-pointer flex relative"

@@ -22,7 +22,7 @@ module.exports = {
         secondary: "#F5E6E0",
       },
       backgroundImage: {
-        hero: "url('https://img.freepik.com/free-vector/realistic-bokeh-background_52683-64201.jpg')",
+        hero: "url('https://media.architecturaldigest.com/photos/622a4e512b9c59af16b36cc9/2:1/w_1280,c_limit/PW%20STORE-PILLOW%20SHELF.jpg')",
       },
     },
   },
