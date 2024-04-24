@@ -8,25 +8,35 @@ export const ProductProvider = ({ children }) => {
 
   // Fetch products
   useEffect(() => {
-    // Check if products exist in local storage
-    const storedProducts = JSON.parse(localStorage.getItem("products"));
-    if (storedProducts) {
-      setProducts(storedProducts);
-    } else {
-      // If products don't exist in local storage, fetch them
-      const fetchProducts = async () => {
-        try {
-          const response = await fetch("https://dummyjson.com/products");
+    const categories = [
+      "groceries",
+      "home-decoration",
+      "furniture",
+      "lighting",
+      "sunglasses",
+      "womens-jewellery",
+    ];
+
+    const fetchProducts = async () => {
+      try {
+        const fetchedProducts = [];
+
+        for (const category of categories) {
+          const response = await fetch(
+            `https://dummyjson.com/products/category/${category}`
+          );
           const data = await response.json();
-          // Assuming data is an array of products
-          setProducts(data.products);
-          localStorage.setItem("products", JSON.stringify(data.products));
-        } catch (error) {
-          console.error("Error fetching products:", error);
+          fetchedProducts.push(...data.products);
         }
-      };
-      fetchProducts();
-    }
+
+        setProducts(fetchedProducts);
+        localStorage.setItem("products", JSON.stringify(fetchedProducts));
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   return (
